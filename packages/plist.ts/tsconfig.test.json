@@ -1,0 +1,17 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "allowJs": true,
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "noEmit": true,
+    "rootDir": ".",
+    "types": ["jest", "node"],
+    "verbatimModuleSyntax": false,
+    "paths": {
+      "@sapkalabs/plist.ts": ["./src/index.ts"]
+    }
+  },
+  "include": ["src/**/*.ts", "tests/**/*.ts"],
+  "exclude": ["lib", "node_modules"]
+}
