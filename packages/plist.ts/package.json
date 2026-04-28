@@ -1,6 +1,6 @@
 {
   "name": "@sapkalabs/plist.ts",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A modern ESM TypeScript plist parsing and building library",
   "type": "module",
   "sideEffects": false,
