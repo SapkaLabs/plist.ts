@@ -1,51 +1,59 @@
-/**
- * Core type definitions for @sapkalabs/plist.ts
- *
- * A plist value can be any of the types below, mirroring Apple's Property List
- * specification.
- */
-
-/** A dictionary / object node in a plist document. */
+/** A normalized dictionary / object node in a plist document. */
 export type PlistDict = { [key: string]: PlistValue };
 
-/** An array node in a plist document. */
+/** A normalized array node in a plist document. */
 export type PlistArray = PlistValue[];
 
-/**
- * Union of every value type that can appear in a plist document.
- *
- * - `string`   — <string>
- * - `number`   — <integer> or <real>
- * - `boolean`  — <true> / <false>
- * - `Date`     — <date>
- * - `Buffer`   — <data> (binary data)
- * - `PlistDict` — <dict>
- * - `PlistArray` — <array>
- */
+/** Values returned by parsed plist documents and stored by {@link Plist}. */
 export type PlistValue =
   | string
   | number
+  | bigint
   | boolean
   | Date
-  | Buffer
+  | null
+  | Uint8Array
   | PlistDict
   | PlistArray;
 
-/** Options accepted by {@link parse}. */
+/** Input dictionaries accepted by {@link Plist.fromObject}. */
+export type PlistInputDict = { [key: string]: PlistInputValue };
+
+/** Input arrays accepted by {@link Plist.fromObject}. */
+export type PlistInputArray = PlistInputValue[];
+
+/** Values accepted by {@link Plist.fromObject} before normalization. */
+export type PlistInputValue =
+  | string
+  | number
+  | bigint
+  | boolean
+  | Date
+  | null
+  | undefined
+  | Uint8Array
+  | ArrayBuffer
+  | ArrayBufferView
+  | PlistInputDict
+  | PlistInputArray;
+
+/** Options accepted by {@link Plist.fromText}. */
 export interface ParseOptions {
   /**
-   * When `true`, integer values in `<integer>` nodes are parsed as `bigint`
-   * instead of `number`.  Defaults to `false`.
+   * When true, integer values in <integer> nodes are parsed as bigint instead
+   * of number. Defaults to false.
    */
   bigIntegers?: boolean;
 }
 
-/** Options accepted by {@link build}. */
+/** Options accepted by {@link Plist.toText}. */
 export interface BuildOptions {
-  /**
-   * Indentation string used when pretty-printing the XML output.
-   * Pass an empty string `""` to disable indentation.
-   * Defaults to `"\t"`.
-   */
+  /** Whether to pretty-print the XML output. Defaults to true. */
+  pretty?: boolean;
+
+  /** Indentation string used when pretty-printing XML. */
   indent?: string;
+
+  /** Newline string used when pretty-printing XML. */
+  newline?: string;
 }

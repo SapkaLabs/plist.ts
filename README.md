@@ -6,38 +6,40 @@ Intended as a TypeScript-first, ESM-native successor to [TooTallNate/plist.js](h
 
 ## Packages
 
-| Package | Description |
-|---------|-------------|
+| Package                                      | Description            |
+| -------------------------------------------- | ---------------------- |
 | [`@sapkalabs/plist.ts`](./packages/plist.ts) | The core plist library |
-| [`@sapkalabs/plist.ts-demo`](./apps/demo) | Demo / playground app |
+| [`@sapkalabs/plist.ts-demo`](./apps/demo)    | Demo / playground app  |
 
 ## Getting started
 
 ```bash
 # Install dependencies
-npm install
+yarn install
 
 # Build all packages
-npm run build
+yarn build
 
 # Run all tests
-npm test
+yarn test
 
 # Lint all packages
-npm run lint
+yarn lint
 ```
 
-## Library API (planned)
+## Library API
 
 ```ts
-import { parse, build } from '@sapkalabs/plist.ts';
+import { Plist } from "@sapkalabs/plist.ts";
 
-// Parse a plist XML string into a JavaScript value
-const value = parse('<plist version="1.0"><string>Hello</string></plist>');
+// Parse a plist XML string into a JavaScript value.
+const value = Plist.fromText(
+  '<plist version="1.0"><string>Hello</string></plist>',
+).toObject();
 console.log(value); // "Hello"
 
-// Serialize a JavaScript value back to plist XML
-const xml = build({ greeting: 'Hello', count: 42 });
+// Serialize a JavaScript value back to plist XML.
+const xml = Plist.fromObject({ greeting: "Hello", count: 42 }).toText();
 console.log(xml);
 ```
 

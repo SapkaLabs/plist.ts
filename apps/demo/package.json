@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node --import tsx/esm src/index.ts",
     "typecheck": "tsc --noEmit",
-    "clean": "rm -rf dist"
+    "clean": "node -e \"require('node:fs').rmSync('dist', { recursive: true, force: true })\""
   },
   "dependencies": {
     "@sapkalabs/plist.ts": "*"
