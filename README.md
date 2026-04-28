@@ -126,6 +126,10 @@ yarn lint
 yarn typecheck
 ```
 
+## Acknowledgements
+
+This repository builds on the original code and idea from [TooTallNate/plist.js](https://github.com/TooTallNate/plist.js). It was first developed for local use and later published under the SapkaLabs organization. Thanks to the original project and its maintainers.
+
 ## License
 
 MIT

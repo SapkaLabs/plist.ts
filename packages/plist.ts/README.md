@@ -97,6 +97,10 @@ This package targets modern TypeScript and ESM-first projects, with typed helper
 
 See the repository root README for workspace commands and contributor guidance: https://github.com/SapkaLabs/plist.ts#development
 
+## Acknowledgements
+
+This package builds on the original code and idea from [TooTallNate/plist.js](https://github.com/TooTallNate/plist.js). It was first developed for local use and later published under the SapkaLabs organization. Thanks to the original project and its maintainers.
+
 ## License
 
 MIT
