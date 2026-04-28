@@ -1,68 +1,97 @@
 # @sapkalabs/plist.ts
 
-A modern ESM TypeScript library for parsing and building Apple Property List
-(plist) XML documents.
+TypeScript-first Apple property list parser, serializer, and validator for modern ESM Node.js projects.
 
-## Install
+[![npm version](https://img.shields.io/npm/v/%40sapkalabs%2Fplist.ts?logo=npm)](https://www.npmjs.com/package/@sapkalabs/plist.ts)
+[![npm downloads](https://img.shields.io/npm/dm/%40sapkalabs%2Fplist.ts?logo=npm)](https://www.npmjs.com/package/@sapkalabs/plist.ts)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](../../LICENSE)
 
-```bash
-yarn add @sapkalabs/plist.ts
-```
+`@sapkalabs/plist.ts` parses Apple plist XML into JavaScript values, serializes JavaScript values back to plist XML, and provides typed helpers for safer dictionary reads in build tools and automation scripts.
+
+## Why this package?
+
+- TypeScript-first API for modern Node.js projects.
+- ESM-native package output.
+- Useful for `Info.plist`, entitlements, `ExportOptions.plist`, and similar Apple tooling files.
+- Helpful guard and reader utilities for validating parsed dictionaries.
+
+## Installation
 
 ```bash
 npm install @sapkalabs/plist.ts
 ```
 
-## Usage
+## Quick start
 
 ```ts
 import { Plist } from '@sapkalabs/plist.ts';
 
-const plist = Plist.fromText(
-  '<plist version="1.0"><dict><key>name</key><string>plist.ts</string></dict></plist>'
-);
+const value = Plist.fromText(`
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>CFBundleIdentifier</key>
+    <string>com.example.app</string>
+  </dict>
+</plist>
+`).toObject();
 
-const value = plist.toObject();
-const xml = Plist.fromObject({ name: 'plist.ts', count: 42 }).toText();
+const xml = Plist.fromObject({
+  CFBundleIdentifier: 'com.example.app',
+  CFBundleVersion: '1',
+}).toText();
 ```
 
-## Reading parsed values
+## Common use cases
+
+- generate or update `Info.plist` values
+- inspect entitlements and export option plists in CI
+- process plist XML extracted from provisioning-related workflows
+- replace older plist libraries in ESM-first TypeScript projects
+
+## Reading parsed values safely
 
 ```ts
 import {
   Plist,
   assertPlistDict,
-  readPlistDataArray,
   readPlistString,
   readPlistStringArray,
 } from '@sapkalabs/plist.ts';
 
-const root = assertPlistDict(
-  Plist.fromText(xml).toObject(),
-  'provisioning profile'
-);
-
-const uuid = readPlistString(root, 'UUID');
-const teams = readPlistStringArray(root, 'TeamIdentifier', {
+const root = assertPlistDict(Plist.fromText(xml).toObject(), 'plist root');
+const bundleId = readPlistString(root, 'CFBundleIdentifier');
+const teamIds = readPlistStringArray(root, 'TeamIdentifier', {
   allowSingle: true,
 });
-const certificates = readPlistDataArray(root, 'DeveloperCertificates');
 ```
 
-## API
+## API overview
 
-- `Plist.fromText(xml, options?)` parses XML plist text.
-- `Plist.fromObject(value)` creates a plist from a supported JavaScript value.
-- `plist.toObject()` returns a defensive copy of the normalized value.
-- `plist.toText(options?)` serializes the value to plist XML.
-- `isPlistDict(value)` narrows parsed values to dictionaries.
-- `assertPlistDict(value, label?)` returns a dictionary or throws a clear error.
-- `readPlistString(source, key)` reads a required string property.
-- `readPlistStringArray(source, key, options?)` reads a required string array.
-- `readPlistDataArray(source, key)` reads a required `Uint8Array` array.
+- `Plist.fromText(xml, options?)`
+- `Plist.fromObject(value)`
+- `plist.toObject()`
+- `plist.toText(options?)`
+- `isPlistDict(value)`
+- `assertPlistDict(value, label?)`
+- `readPlistString(source, key)`
+- `readPlistStringArray(source, key, options?)`
+- `readPlistDataArray(source, key)`
 
-Supported values are strings, finite numbers, bigints, booleans, dates, null,
-arrays, plain objects, `Uint8Array`, `ArrayBuffer`, and typed-array views.
+## Supported runtime / module format
+
+- Node.js `>=20`
+- ESM-only package
+- Bundled TypeScript types
+
+## How is this different from `plist` / `plist.js`?
+
+This package targets modern TypeScript and ESM-first projects, with typed helpers for Apple plist automation workflows. If you need wider legacy CommonJS compatibility, older packages may still be the better choice.
+
+## Development
+
+See the repository root `README.md` for workspace commands and contributor guidance.
 
 ## License
 

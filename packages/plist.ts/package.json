@@ -1,7 +1,7 @@
 {
   "name": "@sapkalabs/plist.ts",
   "version": "0.2.0",
-  "description": "A modern ESM TypeScript plist parsing and building library",
+  "description": "TypeScript-first Apple property list parser, serializer, and validator for modern ESM Node.js projects",
   "type": "module",
   "sideEffects": false,
   "main": "./lib/index.js",
@@ -33,11 +33,22 @@
   },
   "keywords": [
     "plist",
-    "apple",
+    "plist-parser",
+    "plist-builder",
+    "plist-serializer",
     "property-list",
+    "apple",
+    "ios",
+    "macos",
+    "xcode",
+    "info-plist",
+    "entitlements",
+    "mobileprovision",
+    "provisioning-profile",
     "xml",
     "typescript",
-    "esm"
+    "esm",
+    "nodejs"
   ],
   "repository": {
     "type": "git",
