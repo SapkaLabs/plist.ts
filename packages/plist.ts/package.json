@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "A modern ESM TypeScript plist parsing and building library",
   "type": "module",
+  "sideEffects": false,
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
   "exports": {
@@ -23,6 +24,7 @@
   "scripts": {
     "build": "tsc --project tsconfig.build.json",
     "clean": "node -e \"require('node:fs').rmSync('lib', { recursive: true, force: true })\"",
+    "prepack": "yarn clean && yarn build",
     "test": "jest --runInBand",
     "test:coverage": "jest --coverage --runInBand",
     "test:watch": "jest --watch",
@@ -44,6 +46,9 @@
   },
   "author": "SapkaLabs <info@sapkalabs.com> (https://github.com/SapkaLabs)",
   "license": "MIT",
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "bugs": {
     "url": "https://github.com/SapkaLabs/plist.ts/issues"
   },
