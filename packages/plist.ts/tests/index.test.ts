@@ -1,3 +1,4 @@
+import { describe, expect, it } from '@jest/globals';
 import * as api from '@sapkalabs/plist.ts';
 import {
   Plist,
