@@ -4,7 +4,7 @@ TypeScript-first Apple property list parser, serializer, and validator for moder
 
 [![npm version](https://img.shields.io/npm/v/%40sapkalabs%2Fplist.ts?logo=npm)](https://www.npmjs.com/package/@sapkalabs/plist.ts)
 [![npm downloads](https://img.shields.io/npm/dm/%40sapkalabs%2Fplist.ts?logo=npm)](https://www.npmjs.com/package/@sapkalabs/plist.ts)
-[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](../../LICENSE)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/SapkaLabs/plist.ts/blob/main/LICENSE)
 
 `@sapkalabs/plist.ts` parses Apple plist XML into JavaScript values, serializes JavaScript values back to plist XML, and provides typed helpers for safer dictionary reads in build tools and automation scripts.
 
@@ -16,6 +16,10 @@ TypeScript-first Apple property list parser, serializer, and validator for moder
 - Helpful guard and reader utilities for validating parsed dictionaries.
 
 ## Installation
+
+```bash
+yarn add @sapkalabs/plist.ts
+```
 
 ```bash
 npm install @sapkalabs/plist.ts
@@ -91,7 +95,7 @@ This package targets modern TypeScript and ESM-first projects, with typed helper
 
 ## Development
 
-See the repository root `README.md` for workspace commands and contributor guidance.
+See the repository root README for workspace commands and contributor guidance: https://github.com/SapkaLabs/plist.ts#development
 
 ## License
 
