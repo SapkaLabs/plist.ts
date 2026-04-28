@@ -43,6 +43,29 @@ const xml = Plist.fromObject({ greeting: "Hello", count: 42 }).toText();
 console.log(xml);
 ```
 
+## Reading parsed values
+
+```ts
+import {
+  Plist,
+  assertPlistDict,
+  readPlistDataArray,
+  readPlistString,
+  readPlistStringArray,
+} from "@sapkalabs/plist.ts";
+
+const root = assertPlistDict(
+  Plist.fromText(xml).toObject(),
+  "provisioning profile",
+);
+
+const uuid = readPlistString(root, "UUID");
+const teams = readPlistStringArray(root, "TeamIdentifier", {
+  allowSingle: true,
+});
+const certificates = readPlistDataArray(root, "DeveloperCertificates");
+```
+
 ## License
 
 MIT

@@ -1,5 +1,14 @@
 import * as api from '@sapkalabs/plist.ts';
-import { Plist, type PlistDict } from '@sapkalabs/plist.ts';
+import {
+  Plist,
+  assertPlistDict,
+  isPlistDict,
+  readPlistDataArray,
+  readPlistString,
+  readPlistStringArray,
+  type PlistDict,
+  type PlistValue,
+} from '@sapkalabs/plist.ts';
 
 function plistFixture(xml: string): string {
   return `<?xml version="1.0" encoding="UTF-8"?>
@@ -18,8 +27,95 @@ describe('@sapkalabs/plist.ts public API', () => {
     expect(typeof api.Plist).toBe('function');
     expect(typeof Plist.fromObject).toBe('function');
     expect(typeof Plist.fromText).toBe('function');
+    expect(typeof api.isPlistDict).toBe('function');
+    expect(typeof api.assertPlistDict).toBe('function');
+    expect(typeof api.readPlistString).toBe('function');
+    expect(typeof api.readPlistStringArray).toBe('function');
+    expect(typeof api.readPlistDataArray).toBe('function');
     expect(exports.parse).toBeUndefined();
     expect(exports.build).toBeUndefined();
+  });
+});
+
+describe('plist guard and reader helpers', () => {
+  describe('isPlistDict()', () => {
+    it('accepts only plain plist dictionaries', () => {
+      expect(isPlistDict({})).toBe(true);
+      expect(isPlistDict(null)).toBe(false);
+      expect(isPlistDict([])).toBe(false);
+      expect(isPlistDict(new Date())).toBe(false);
+      expect(isPlistDict(new Uint8Array())).toBe(false);
+    });
+  });
+
+  describe('assertPlistDict()', () => {
+    it('returns valid dictionaries', () => {
+      const value: PlistValue = { name: 'plist.ts' };
+
+      expect(assertPlistDict(value)).toBe(value);
+    });
+
+    it('throws on invalid values with a clear label', () => {
+      expect(() => assertPlistDict([], 'root')).toThrow(
+        'Expected root to be a plist dictionary'
+      );
+      expect(() => assertPlistDict(null)).toThrow(
+        'Expected value to be a plist dictionary'
+      );
+    });
+  });
+
+  describe('readPlistString()', () => {
+    it('returns string values', () => {
+      expect(readPlistString({ name: 'plist.ts' }, 'name')).toBe('plist.ts');
+    });
+
+    it('throws when the value is missing or not a string', () => {
+      expect(() => readPlistString({ name: 1 }, 'name')).toThrow(
+        'Expected name to be a plist string'
+      );
+      expect(() => readPlistString({}, 'name')).toThrow(
+        'Expected name to be a plist string'
+      );
+    });
+  });
+
+  describe('readPlistStringArray()', () => {
+    it('returns arrays of strings', () => {
+      expect(readPlistStringArray({ names: ['a', 'b'] }, 'names')).toEqual([
+        'a',
+        'b',
+      ]);
+    });
+
+    it('accepts single strings only when allowSingle is true', () => {
+      expect(
+        readPlistStringArray({ names: 'a' }, 'names', { allowSingle: true })
+      ).toEqual(['a']);
+      expect(() => readPlistStringArray({ names: 'a' }, 'names')).toThrow(
+        'Expected names to be a plist string array'
+      );
+    });
+
+    it('throws for mixed arrays', () => {
+      expect(() => readPlistStringArray({ names: ['a', 1] }, 'names')).toThrow(
+        'Expected names to be a plist string array'
+      );
+    });
+  });
+
+  describe('readPlistDataArray()', () => {
+    it('returns arrays of Uint8Array values', () => {
+      const data = [new Uint8Array([1]), new Uint8Array([2])];
+
+      expect(readPlistDataArray({ data }, 'data')).toBe(data);
+    });
+
+    it('throws for mixed arrays', () => {
+      expect(() =>
+        readPlistDataArray({ data: [new Uint8Array([1]), 'not data'] }, 'data')
+      ).toThrow('Expected data to be a plist data array');
+    });
   });
 });
 
