@@ -1,0 +1,81 @@
+{
+  "name": "@sapkalabs/plist.ts",
+  "version": "0.1.0",
+  "description": "A modern ESM TypeScript plist parsing and building library",
+  "type": "module",
+  "main": "./lib/index.cjs",
+  "module": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./lib/index.d.ts",
+        "default": "./lib/index.js"
+      },
+      "require": {
+        "types": "./lib/index.d.cts",
+        "default": "./lib/index.cjs"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "lib",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "scripts": {
+    "build": "tsc --project tsconfig.build.json && node ../../scripts/build-cjs.mjs",
+    "clean": "rm -rf lib",
+    "test": "jest --runInBand",
+    "test:coverage": "jest --coverage --runInBand",
+    "test:watch": "jest --watch",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint \"src/**/*.ts\" \"tests/**/*.ts\""
+  },
+  "keywords": [
+    "plist",
+    "apple",
+    "property-list",
+    "xml",
+    "typescript",
+    "esm"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SapkaLabs/plist.ts.git",
+    "directory": "packages/plist.ts"
+  },
+  "author": "SapkaLabs <info@sapkalabs.com> (https://github.com/SapkaLabs)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SapkaLabs/plist.ts/issues"
+  },
+  "homepage": "https://github.com/SapkaLabs/plist.ts#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.14",
+    "@types/node": "^20.0.0",
+    "eslint": "^9.0.0",
+    "@eslint/js": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "prettier": "^3.0.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.2.5",
+    "typescript": "^5.5.0",
+    "typescript-eslint": "^8.0.0"
+  },
+  "prettier": {
+    "quoteProps": "consistent",
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false
+  }
+}
